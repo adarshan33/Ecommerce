@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "Hash": "SzVAzZFqab4UeWRJZ5/1WOwCgw9Tgi/+6inoimNDMj0=",
+  "Source": "ECommerce.API",
+  "BasePath": "_content/ECommerce.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ECommerce.API\\wwwroot",
+      "Source": "ECommerce.API",
+      "ContentRoot": "C:\\App\\backend-net7\\wwwroot\\",
+      "BasePath": "_content/ECommerce.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\App\\backend-net7\\wwwroot\\uploads\\19be830e-10af-40e2-8dd9-4c1dc77dc350.PNG",
+      "SourceId": "ECommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\App\\backend-net7\\wwwroot\\",
+      "BasePath": "_content/ECommerce.API",
+      "RelativePath": "uploads/19be830e-10af-40e2-8dd9-4c1dc77dc350.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\19be830e-10af-40e2-8dd9-4c1dc77dc350.PNG"
+    },
+    {
+      "Identity": "C:\\App\\backend-net7\\wwwroot\\uploads\\3f7fc535-8cca-40b6-a896-ae001c3f4323.PNG",
+      "SourceId": "ECommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\App\\backend-net7\\wwwroot\\",
+      "BasePath": "_content/ECommerce.API",
+      "RelativePath": "uploads/3f7fc535-8cca-40b6-a896-ae001c3f4323.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\3f7fc535-8cca-40b6-a896-ae001c3f4323.PNG"
+    },
+    {
+      "Identity": "C:\\App\\backend-net7\\wwwroot\\uploads\\6aafaeff-f5bb-467c-8bef-0310da0d6391.PNG",
+      "SourceId": "ECommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\App\\backend-net7\\wwwroot\\",
+      "BasePath": "_content/ECommerce.API",
+      "RelativePath": "uploads/6aafaeff-f5bb-467c-8bef-0310da0d6391.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6aafaeff-f5bb-467c-8bef-0310da0d6391.PNG"
+    },
+    {
+      "Identity": "C:\\App\\backend-net7\\wwwroot\\uploads\\bd02c28a-6afb-4c1b-99b0-e58e06d3a9f8.PNG",
+      "SourceId": "ECommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\App\\backend-net7\\wwwroot\\",
+      "BasePath": "_content/ECommerce.API",
+      "RelativePath": "uploads/bd02c28a-6afb-4c1b-99b0-e58e06d3a9f8.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\bd02c28a-6afb-4c1b-99b0-e58e06d3a9f8.PNG"
+    }
+  ]
+}
