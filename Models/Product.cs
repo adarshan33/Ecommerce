@@ -11,4 +11,7 @@ public class Product
 
     public bool Featured { get; set; }
     public string ImagePath { get; set; } = "";
+
+    public string? ImagePublicId { get; set; }
+
 }

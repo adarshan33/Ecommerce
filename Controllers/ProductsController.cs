@@ -10,6 +10,9 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using ECommerce.API.Services;
 
 namespace ECommerce.API.Controllers;
 
@@ -19,10 +22,11 @@ public class ProductsController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly IWebHostEnvironment _env;
-
-    public ProductsController(AppDbContext db, IWebHostEnvironment env)
+    private readonly CloudinaryService _cloud;
+    public ProductsController(AppDbContext db, IWebHostEnvironment env, CloudinaryService cloud)
     {
         _db = db; _env = env;
+        _cloud = cloud;
     }
 
     [HttpGet]
@@ -34,7 +38,7 @@ public class ProductsController : ControllerBase
     }
 
 
-    [Authorize]
+   // [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] ProductCreateDto dto)
     {
@@ -48,27 +52,18 @@ public class ProductsController : ControllerBase
 
         if (dto.Image != null)
         {
-            var uploadsPath = Path.Combine(_env.ContentRootPath, "uploads");
-
-            if (!Directory.Exists(uploadsPath))
-                Directory.CreateDirectory(uploadsPath);
-
-            var fn = Guid.NewGuid().ToString() + Path.GetExtension(dto.Image.FileName);
-            var fp = Path.Combine(uploadsPath, fn);
-
-            using var stream = System.IO.File.Create(fp);
-            await dto.Image.CopyToAsync(stream);
-
-            p.ImagePath = "uploads/" + fn;
+            var (url, publicId) = await _cloud.UploadImageAsync(dto.Image);
+            p.ImagePath = url;
+            p.ImagePublicId = publicId;
         }
-
 
         _db.Products.Add(p);
         await _db.SaveChangesAsync();
+
         return Ok(p);
     }
 
-    [Authorize]
+   // [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromForm] ProductCreateDto dto)
     {
@@ -83,53 +78,80 @@ public class ProductsController : ControllerBase
         p.Price = dto.Price;
         p.IsRental = dto.IsRental;
 
-        // Image upload
         if (dto.Image != null)
         {
-            var uploadsPath = Path.Combine(_env.ContentRootPath, "uploads");
-            Directory.CreateDirectory(uploadsPath);
+            // delete existing image
+            if (!string.IsNullOrEmpty(p.ImagePublicId))
+            {
+                await _cloud.DeleteImageAsync(p.ImagePublicId);
+            }
 
-            var fn = Guid.NewGuid() + Path.GetExtension(dto.Image.FileName);
-            var fp = Path.Combine(uploadsPath, fn);
-
-            using var stream = System.IO.File.Create(fp);
-            await dto.Image.CopyToAsync(stream);
-
-            p.ImagePath = "uploads/" + fn;
+            // upload new image
+            var (url, publicId) = await _cloud.UploadImageAsync(dto.Image);
+            p.ImagePath = url;
+            p.ImagePublicId = publicId;
         }
+
 
         await _db.SaveChangesAsync();
         return Ok(p);
     }
 
 
-    [Authorize]
+    //[Authorize]
+    //[HttpPost("delete")]
+    //public async Task<IActionResult> DeleteProducts([FromBody] int[] ids)
+    //{
+    //    //var isAdmin = Request.Headers["X-ADMIN-KEY"] == "supersecret123";
+
+    //    //if (!isAdmin)
+    //    //    return Unauthorized("You are not allowed to delete products.");
+    //    var products = _db.Products.Where(p => ids.Contains(p.Id)).ToList();
+
+    //    if (products.Count == 0)
+    //        return NotFound();
+
+    //    foreach (var product in products)
+    //    {
+    //        if (!string.IsNullOrWhiteSpace(product.ImagePath))
+    //        {
+    //            var fullPath = Path.Combine(_env.ContentRootPath, product.ImagePath);
+    //            if (System.IO.File.Exists(fullPath))
+    //                System.IO.File.Delete(fullPath);
+    //        }
+    //    }
+
+    //    _db.Products.RemoveRange(products);
+    //    await _db.SaveChangesAsync();
+
+    //    return Ok(new { message = "Product(s) deleted successfully" });
+    //}
+
+    //[Authorize]
     [HttpPost("delete")]
     public async Task<IActionResult> DeleteProducts([FromBody] int[] ids)
     {
-        //var isAdmin = Request.Headers["X-ADMIN-KEY"] == "supersecret123";
+        var products = _db.Products.Where(x => ids.Contains(x.Id)).ToList();
 
-        //if (!isAdmin)
-        //    return Unauthorized("You are not allowed to delete products.");
-        var products = _db.Products.Where(p => ids.Contains(p.Id)).ToList();
-
-        if (products.Count == 0)
-            return NotFound();
-
-        foreach (var product in products)
+        foreach (var p in products)
         {
-            if (!string.IsNullOrWhiteSpace(product.ImagePath))
+            if (!string.IsNullOrEmpty(p.ImagePublicId))
             {
-                var fullPath = Path.Combine(_env.ContentRootPath, product.ImagePath);
-                if (System.IO.File.Exists(fullPath))
-                    System.IO.File.Delete(fullPath);
+                await _cloud.DeleteImageAsync(p.ImagePublicId);
             }
+            _db.Products.Remove(p);
         }
 
-        _db.Products.RemoveRange(products);
         await _db.SaveChangesAsync();
 
-        return Ok(new { message = "Product(s) deleted successfully" });
+        return Ok(true);
+    }
+
+
+    [HttpGet("products")]
+    public IActionResult Ping()
+    {
+        return Ok("Fetching all the details");
     }
 
 }

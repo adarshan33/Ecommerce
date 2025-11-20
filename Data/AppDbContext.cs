@@ -23,6 +23,8 @@ public class AppDbContext : DbContext
             entity.Property(e => e.IsRental).HasColumnName("isrental");
             entity.Property(e => e.Featured).HasColumnName("featured");
             entity.Property(e => e.ImagePath).HasColumnName("imagepath");
+            entity.Property(e => e.ImagePublicId).HasColumnName("imagepublicid");
+
         });
 
         modelBuilder.Entity<Enquiry>().ToTable("enquiries");

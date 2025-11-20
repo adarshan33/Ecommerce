@@ -8,6 +8,8 @@ using System.IO;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using CloudinaryDotNet;
+using ECommerce.API.Services;
 
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader());
 });
+
+builder.Services.AddSingleton<CloudinaryService>();
 
 
 // Auth (JWT)
