@@ -38,7 +38,7 @@ public class ProductsController : ControllerBase
     }
 
 
-   // [Authorize]
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] ProductCreateDto dto)
     {
@@ -63,7 +63,7 @@ public class ProductsController : ControllerBase
         return Ok(p);
     }
 
-   // [Authorize]
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromForm] ProductCreateDto dto)
     {
@@ -127,7 +127,7 @@ public class ProductsController : ControllerBase
     //    return Ok(new { message = "Product(s) deleted successfully" });
     //}
 
-    //[Authorize]
+    [Authorize]
     [HttpPost("delete")]
     public async Task<IActionResult> DeleteProducts([FromBody] int[] ids)
     {
